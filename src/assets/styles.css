@@ -1,0 +1,87 @@
+/* Styles généraux */
+.home {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: gray;
+}
+
+/* Styles pour les posts */
+.posts {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.post h2 {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.meta {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.extract {
+    font-style: italic;
+    color: #444;
+}
+
+/* Styles pour le texte complet */
+.full-text summary {
+    cursor: pointer;
+    color: #0066cc;
+    font-weight: bold;
+}
+
+.full-text p {
+    padding-top: 5px;
+}
+
+/* Styles pour les commentaires */
+.comments {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.comments h3 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-text {
+    margin: 0 0 5px 10px;
+    color: #444;
+}
+
+.comment-likes {
+    margin-left: 10px;
+    color: #999;
+    font-size: 0.9em;
+}
