@@ -42,12 +42,17 @@ body {
 }
 
 .post {
+    position: relative;
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
 .post:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -78,6 +83,7 @@ body {
     font-weight: 500;
     margin-bottom: 10px;
 }
+
 .full-text summary:hover {
     color: #005bb5;
 }
@@ -157,6 +163,7 @@ input, textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 button {
@@ -189,7 +196,10 @@ button:hover {
 
 /* Bouton supprimer */
 button.delete-post {
-    background-color: #ff4d4d; /* Couleur rouge pour le bouton */
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff4d4d;
     color: white;
     font-size: 1em;
     border: none;
@@ -200,5 +210,5 @@ button.delete-post {
 }
 
 button.delete-post:hover {
-    background-color: #e63946; /* Rouge foncé au survol */
+    background-color: #e63946;
 }
