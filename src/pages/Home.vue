@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+
 const posts = ref([]);
 const isLoading = ref(true);
 
@@ -8,6 +9,32 @@ async function getPosts() {
     const data = await response.json();
     isLoading.value = false;
     posts.value = data.rows;
+
+    // Trier les posts par date de publication décroissante
+    posts.value.sort((a, b) => {
+        const dateA = new Date(a.doc.publish_date);
+        const dateB = new Date(b.doc.publish_date);
+        return dateB - dateA; // Ordre décroissant (date la plus récente en premier)
+    });
+}
+
+async function deletePost(postId, rev) {
+    try {
+        const response = await fetch(`http://127.0.0.1:5984/infra-don/${postId}?rev=${rev}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            // Filtrer les posts pour ne garder que ceux qui ne sont pas supprimés
+            posts.value = posts.value.filter(post => post.id !== postId);
+            alert('Le post a été supprimé avec succès.');
+        } else {
+            alert('Échec de la suppression du post.');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la suppression du post:', error);
+        alert('Une erreur est survenue lors de la suppression.');
+    }
 }
 
 onMounted(() => {
@@ -48,6 +75,10 @@ onMounted(() => {
                         <p class="comment-likes">👍 {{ comment.likes }}</p>
                     </div>
                 </div>
+
+                <!-- Bouton de suppression -->
+                <button @click="deletePost(post.id, post.doc._rev)" class="delete-post">Supprimer ce post</button>
+
             </div>
         </div>
     </div>

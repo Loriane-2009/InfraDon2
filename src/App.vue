@@ -8,7 +8,8 @@ import { RouterView } from 'vue-router';
   <div>
     <nav>
       <RouterLink to="/">Go to Home</RouterLink>
-      <RouterLink to="/about">Go to About</RouterLink>
+    <br>
+      <RouterLink to="/about">Create post</RouterLink>
     </nav>
     <RouterView/>
   </div>
