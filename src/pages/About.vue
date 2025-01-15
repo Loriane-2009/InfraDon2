@@ -60,12 +60,11 @@ const submitForm = async () => {
   }
 };
 
-
-// Fonction pour générer des posts de test
 const generateTestPosts = async () => {
   const count = 20; // Nombre de posts à générer
 
   const generateDocument = (index) => ({
+    _id: `post_${index}_${new Date().getTime()}`, // ID unique basé sur l'index et le timestamp
     content: {
       title: `Titre ${index}`,
       extract: `Extrait de l'article ${index}`,
@@ -84,7 +83,7 @@ const generateTestPosts = async () => {
     const docs = Array.from({ length: count }, (_, index) => generateDocument(index));
     for (const doc of docs) {
       await fetch('http://127.0.0.1:5984/infra-don', {
-        method: 'POST',
+        method: 'PUT', // Utiliser PUT pour inclure explicitement l'_id
         headers: {
           'Content-Type': 'application/json',
         },
@@ -97,6 +96,7 @@ const generateTestPosts = async () => {
     alert('Une erreur est survenue lors de la génération des posts.');
   }
 };
+
 </script>
 
 <template>
