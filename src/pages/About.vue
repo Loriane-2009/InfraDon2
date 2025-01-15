@@ -59,9 +59,50 @@ const submitForm = async () => {
     error.value = err.message;
   }
 };
+
+
+// Fonction pour générer des posts de test
+const generateTestPosts = async () => {
+  const count = 20; // Nombre de posts à générer
+
+  const generateDocument = (index) => ({
+    content: {
+      title: `Titre ${index}`,
+      extract: `Extrait de l'article ${index}`,
+      full_text: `Texte complet de l'article ${index}. Il contient plus de contenu pour tester les performances.`
+    },
+    author: `Auteur ${index}`,
+    publish_date: new Date().toISOString(),
+    comments: Array.from({ length: Math.floor(Math.random() * 5) }, (_, i) => ({
+      comment: `Commentaire ${i + 1} sur l'article ${index}`,
+      author: `Commentateur ${i + 1}`,
+      likes: Math.floor(Math.random() * 100),
+    })),
+  });
+
+  try {
+    const docs = Array.from({ length: count }, (_, index) => generateDocument(index));
+    for (const doc of docs) {
+      await fetch('http://127.0.0.1:5984/infra-don', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(doc),
+      });
+    }
+    alert(`${count} posts générés avec succès.`);
+  } catch (err) {
+    console.error('Erreur lors de la génération des posts :', err);
+    alert('Une erreur est survenue lors de la génération des posts.');
+  }
+};
 </script>
 
 <template>
+  <button @click="generateTestPosts" style="margin: 10px; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Générer 20 posts
+      </button>
   <div>
     <h1>Ajouter un Post</h1>
     <form @submit.prevent="submitForm">
