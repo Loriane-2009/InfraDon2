@@ -7,9 +7,9 @@ import { RouterView } from 'vue-router';
 <template>
   <div>
     <nav>
-      <RouterLink to="/">Go to Home</RouterLink>
+      <RouterLink to="/">Voir tous les posts</RouterLink>
     <br>
-      <RouterLink to="/about">Create post</RouterLink>
+      <RouterLink to="/about">Ecrire un post</RouterLink>
     </nav>
     <RouterView/>
   </div>
