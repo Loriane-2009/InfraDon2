@@ -77,6 +77,57 @@ async function deletePost(postId, rev) {
 onMounted(() => {
     getPosts();
 });
+//Modifier extract
+const editingPostId = ref(null); // ID du post en cours de modification
+const newExtract = ref(''); // Contenu du nouvel extrait
+function editExtract(postId, rev, currentExtract) {
+    editingPostId.value = postId;
+    newExtract.value = currentExtract; // Pré-remplir avec l'extrait actuel
+}
+
+async function saveExtract(postId, rev) {
+    try {
+        // Trouver le post à modifier
+        const post = posts.value.find(p => p.id === postId);
+        if (post) {
+            post.doc.content.extract = newExtract.value; // Mettre à jour l'extrait localement
+
+            // Envoyer la mise à jour à la base CouchDB
+            const response = await fetch(`http://127.0.0.1:5984/infra-don/${postId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...post.doc,
+                    _rev: rev,
+                }),
+            });
+
+            if (response.ok) {
+                const updatedPost = await response.json();
+                post.doc._rev = updatedPost.rev; // Mettre à jour la révision
+                alert('Extrait mis à jour avec succès.');
+            } else {
+                throw new Error('Erreur lors de la mise à jour de l\'extrait.');
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Impossible de mettre à jour l\'extrait.');
+    } finally {
+        editingPostId.value = null; // Réinitialiser le formulaire
+        newExtract.value = '';
+    }
+}
+
+function cancelEdit() {
+    editingPostId.value = null; // Annuler la modification
+    newExtract.value = ''; // Réinitialiser l'entrée
+}
+
+
+
 </script>
 
 <template>
@@ -85,7 +136,7 @@ onMounted(() => {
         <div v-if="isLoading" class="loading">
             Chargement...
         </div>
-        
+
         <div v-else class="posts">
             <div v-for="post in posts" :key="post.id" class="post">
                 <!-- Titre et Infos sur le Post -->
@@ -93,10 +144,19 @@ onMounted(() => {
                 <p class="meta">
                     Publié par {{ post.doc.author }} le {{ new Date(post.doc.publish_date).toLocaleDateString() }}
                 </p>
-                
+
                 <!-- Extrait du Post -->
                 <p class="extract">{{ post.doc.content.extract }}</p>
-                
+                <!--modifier l'extrait-->
+                <button @click="editExtract(post.id, post.doc._rev, post.doc.content.extract)">Modifier</button>
+
+                <div v-if="editingPostId === post.id" class="edit-form">
+                    <input v-model="newExtract" placeholder="Modifier l'extrait" />
+                    <button @click="saveExtract(post.id, post.doc._rev)">Enregistrer</button>
+                    <button @click="cancelEdit">Annuler</button>
+                </div>
+
+
                 <!-- Texte Complet -->
                 <details class="full-text">
                     <summary>Lire la suite</summary>
@@ -115,7 +175,8 @@ onMounted(() => {
                     <!-- Formulaire pour ajouter un commentaire -->
                     <div class="add-comment">
                         <textarea v-model="newComment" placeholder="Ajoutez un commentaire..."></textarea>
-                        <button @click="addComment(post.id, post.doc._rev, newComment)" :disabled="!newComment">Ajouter un commentaire</button>
+                        <button @click="addComment(post.id, post.doc._rev, newComment)" :disabled="!newComment">Ajouter
+                            un commentaire</button>
                     </div>
                 </div>
 
@@ -126,4 +187,3 @@ onMounted(() => {
         </div>
     </div>
 </template>
-
