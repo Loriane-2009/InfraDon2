@@ -144,11 +144,15 @@ function cancelEdit() {
                 <p class="meta">
                     Publié par {{ post.doc.author }} le {{ new Date(post.doc.publish_date).toLocaleDateString() }}
                 </p>
+                <div class="extract-container">
+                    <!-- Extrait du Post -->
+                    <p class="extract">{{ post.doc.content.extract }}</p>
+                    <!--modifier l'extrait-->
+                    <button @click="editExtract(post.id, post.doc._rev, post.doc.content.extract)"
+                        class="btn-modify">Modifier l'extrait</button>
 
-                <!-- Extrait du Post -->
-                <p class="extract">{{ post.doc.content.extract }}</p>
-                <!--modifier l'extrait-->
-                <button @click="editExtract(post.id, post.doc._rev, post.doc.content.extract)">Modifier</button>
+                </div>
+
 
                 <div v-if="editingPostId === post.id" class="edit-form">
                     <input v-model="newExtract" placeholder="Modifier l'extrait" />
