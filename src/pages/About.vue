@@ -81,24 +81,16 @@ const generateTestPosts = async () => {
 
   try {
     const docs = Array.from({ length: count }, (_, index) => generateDocument(index));
-    const requests = docs.map(doc => 
-      fetch('http://127.0.0.1:5984/infra-don', {
-        method: 'POST', // Utiliser POST au lieu de PUT pour la génération automatique d'_id par CouchDB
+    for (const doc of docs) {
+      await fetch('http://127.0.0.1:5984/infra-don', {
+        method: 'PUT', // Utiliser PUT pour inclure explicitement l'_id
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(doc),
-      })
-    );
-    
-    const responses = await Promise.all(requests);
-    const errors = responses.filter(response => !response.ok);
-
-    if (errors.length === 0) {
-      alert(`${count} posts générés avec succès.`);
-    } else {
-      alert(`${errors.length} posts n'ont pas pu être créés.`);
+      });
     }
+    alert(`${count} posts générés avec succès.`);
   } catch (err) {
     console.error('Erreur lors de la génération des posts :', err);
     alert('Une erreur est survenue lors de la génération des posts.');
@@ -123,6 +115,12 @@ const generateTestPosts = async () => {
         <label for="author">Auteur :</label>
         <input v-model="author" id="author" type="text" required />
       </div>
+
+      <!-- Suppression du champ de la date, car elle est définie automatiquement -->
+      <!-- <div>
+        <label for="publishDate">Date de publication :</label>
+        <input v-model="publishDate" id="publishDate" type="date" required />
+      </div> -->
 
       <div>
         <label for="extract">Extrait :</label>
