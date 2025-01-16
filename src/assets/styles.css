@@ -36,7 +36,6 @@ h1 {
 .posts {
     display: flex;
     flex-direction: column;
-    repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
 }
 

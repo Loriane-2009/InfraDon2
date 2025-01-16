@@ -60,15 +60,15 @@ const submitForm = async () => {
   }
 };
 
-const generateTestPosts = async () => {
+
+  const generateTestPosts = async () => {
   const count = 20; // Nombre de posts à générer
 
   const generateDocument = (index) => ({
-    _id: `post_${index}_${new Date().getTime()}`, // ID unique basé sur l'index et le timestamp
     content: {
       title: `Titre ${index}`,
       extract: `Extrait de l'article ${index}`,
-      full_text: `Texte complet de l'article ${index}. Il contient plus de contenu pour tester les performances.`
+      full_text: `Texte complet de l'article ${index}. Il contient plus de contenu pour tester les performances.`,
     },
     author: `Auteur ${index}`,
     publish_date: new Date().toISOString(),
@@ -81,28 +81,39 @@ const generateTestPosts = async () => {
 
   try {
     const docs = Array.from({ length: count }, (_, index) => generateDocument(index));
+    let successCount = 0;
+    let errorCount = 0;
+
     for (const doc of docs) {
-      await fetch('http://127.0.0.1:5984/infra-don', {
-        method: 'PUT', // Utiliser PUT pour inclure explicitement l'_id
+      const response = await fetch('http://127.0.0.1:5984/infra-don', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(doc),
       });
+
+      if (response.ok) {
+        successCount++;
+      } else {
+        errorCount++;
+        const errorDetail = await response.json();
+        console.error(`Erreur pour le document ${doc.content.title} :`, errorDetail);
+      }
     }
-    alert(`${count} posts générés avec succès.`);
+
+    alert(`${successCount} posts ajoutés avec succès, ${errorCount} erreurs.`);
   } catch (err) {
     console.error('Erreur lors de la génération des posts :', err);
     alert('Une erreur est survenue lors de la génération des posts.');
   }
 };
 
+
 </script>
 
 <template>
-   <button class="generate-button" @click="generateTestPosts">
-      Générer 20 posts
-    </button>
+   
   <div>
     <h1>Ajouter un Post</h1>
 
