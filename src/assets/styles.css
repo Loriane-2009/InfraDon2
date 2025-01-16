@@ -1,4 +1,4 @@
-/* Styles généraux */
+/* Global Styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,52 +6,53 @@
 }
 
 body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f4f6f8;
-    color: #333;
+    font-family: polymath-display, sans-serif;
+    background: linear-gradient(-45deg, #cd9e8f, #e18aab, #aad3e2, #96a5a2);
     line-height: 1.6;
+    padding-bottom: 100px;
 }
 
-/* Conteneur principal */
+/* Main Container */
 .home {
     max-width: 800px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* Titre principal */
-.home h1 {
+h1 {
+    font-weight: 700;
     font-size: 2.5em;
-    font-weight: bold;
     color: #333;
     text-align: center;
     margin-bottom: 40px;
 }
 
-/* Loader */
 .loading {
     text-align: center;
     font-size: 1.2em;
     color: #888;
 }
 
-/* Styles pour les posts */
 .posts {
     display: flex;
     flex-direction: column;
+    repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
 }
 
 .post {
     position: relative;
-    background-color: #fff;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .post:hover {
@@ -75,7 +76,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* Aligne verticalement l'extrait et le bouton */
     margin-bottom: 10px;
 }
 
@@ -83,28 +83,23 @@ body {
     font-style: italic;
     color: #555;
     margin: 0;
-    /* Supprime les marges pour éviter un désalignement */
 }
 
 .btn-modify {
-
     cursor: pointer;
     font-size: 0.9em;
-    /* Assure une taille de texte cohérente */
     height: auto;
-    /* Permet au padding de définir la hauteur */
 }
 
-/* Texte complet dans la balise details */
 .full-text summary {
     cursor: pointer;
-    color: #0073e6;
+    color: #8693dd;
     font-weight: 500;
     margin-bottom: 10px;
 }
 
 .full-text summary:hover {
-    color: #005bb5;
+    color: #a6aedd;
 }
 
 .full-text p {
@@ -113,7 +108,6 @@ body {
     color: #333;
 }
 
-/* Commentaires */
 .comments {
     margin-top: 20px;
     padding-top: 15px;
@@ -158,7 +152,6 @@ body {
     color: #999;
 }
 
-/* Formulaire d'ajout de post */
 form {
     display: flex;
     flex-direction: column;
@@ -166,9 +159,13 @@ form {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    
 }
 
 label {
@@ -187,21 +184,19 @@ textarea {
 }
 
 button {
-
     padding: 10px;
-    background-color: #0073e6;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
 
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1em;
 }
 
 button:hover {
-    background-color: #005bb5;
+    background-color: #a6aedd;
 }
 
-/* Messages de succès et d'erreur */
 .error,
 .success {
     font-weight: bold;
@@ -217,12 +212,11 @@ button:hover {
     color: green;
 }
 
-/* Bouton supprimer */
 button.delete-post {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    background-color: #ff4d4d;
+    background-color: #cc7272;
     color: white;
     font-size: 1em;
     border: none;
@@ -233,5 +227,23 @@ button.delete-post {
 }
 
 button.delete-post:hover {
-    background-color: #e63946;
+    background-color: #d05454;
+}
+
+
+/* .comment-content{
+    display: flex;
+    justify-content: center;  Centre horizontalement *
+    align-items: center;
+    height: 100vh;
+}
+button.generate-button {
+    display: flex;
+    justify-content: center;
+
+} */
+button.generate-button{
+    display: block; /* Pour que le bouton occupe toute la largeur possible */
+    margin: 30px auto 100px auto; /* Centre horizontalement et ajoute un espacement vertical */
+    padding: 10px 20px;
 }

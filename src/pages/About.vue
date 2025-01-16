@@ -100,11 +100,12 @@ const generateTestPosts = async () => {
 </script>
 
 <template>
-  <button @click="generateTestPosts" style="margin: 10px; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
-        Générer 20 posts
-      </button>
+   <button class="generate-button" @click="generateTestPosts">
+      Générer 20 posts
+    </button>
   <div>
     <h1>Ajouter un Post</h1>
+
     <form @submit.prevent="submitForm">
       <div>
         <label for="title">Titre :</label>
@@ -136,6 +137,10 @@ const generateTestPosts = async () => {
         <button type="submit">Ajouter le Post</button>
       </div>
     </form>
+
+    <button class="generate-button" @click="generateTestPosts">
+      Générer 20 posts
+    </button>
 
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="successMessage" class="success">{{ successMessage }}</div>
