@@ -15,7 +15,7 @@ body {
 /* Main Container */
 .home {
     max-width: 800px;
-    margin: 40px auto;
+    margin: 50px auto;
     padding: 0 20px;
 }
 
@@ -25,6 +25,7 @@ h1 {
     color: #333;
     text-align: center;
     margin-bottom: 40px;
+    margin-top: 50px;
 }
 
 .loading {
